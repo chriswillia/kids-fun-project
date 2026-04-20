@@ -1,11 +1,11 @@
 :root {
-  --bg: linear-gradient(135deg, #6a82fb, #fc5c7d);
+  --bg: linear-gradient(135deg, #a8e6cf 0%, #fdd6a1 50%, #a5d8ff 100%);
   --card: rgba(255, 255, 255, 0.96);
-  --text: #272343;
+  --text: #2b2d42;
   --muted: #6b6a86;
-  --accent: #ff6f61;
-  --accent-dark: #e15a4d;
-  --secondary: #4a6cf7;
+  --accent: #f4a261;
+  --accent-dark: #e76f51;
+  --secondary: #2a9d8f;
   --correct: #2ecc71;
   --wrong: #e74c3c;
 }
@@ -21,6 +21,7 @@ body {
   display: grid;
   place-items: center;
   padding: 20px;
+  overflow-x: hidden;
 }
 
 .container {
@@ -30,6 +31,8 @@ body {
   padding: 32px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 h1 { margin: 0 0 6px; font-size: clamp(2rem, 4vw, 3rem); }
@@ -41,11 +44,12 @@ h2 { margin: 0 0 18px; font-size: 1.4rem; }
 .panel.hidden { display: none; }
 
 fieldset {
-  border: 2px dashed #dcdcef;
+  border: 2px dashed #d5cfa8;
   border-radius: 16px;
   padding: 14px 18px;
   margin: 0 0 18px;
   text-align: left;
+  background: #fffdf6;
 }
 
 legend { padding: 0 8px; font-weight: bold; }
@@ -72,7 +76,7 @@ input[type="number"] {
   font: inherit;
   padding: 10px 14px;
   border-radius: 12px;
-  border: 2px solid #dcdcef;
+  border: 2px solid #d5cfa8;
   background: white;
   min-width: 120px;
 }
@@ -100,7 +104,7 @@ button.primary { background: var(--accent); color: white; }
 button.primary:hover {
   background: var(--accent-dark);
   transform: translateY(-2px);
-  box-shadow: 0 12px 20px rgba(255, 111, 97, 0.3);
+  box-shadow: 0 12px 20px rgba(244, 162, 97, 0.4);
 }
 
 button.secondary {
@@ -120,7 +124,7 @@ button.secondary:hover { background: var(--secondary); color: white; }
 
 .stats div,
 .final-stats div {
-  background: #f3f3fb;
+  background: #f4f9f4;
   border-radius: 14px;
   padding: 10px;
   display: flex;
@@ -131,6 +135,13 @@ button.secondary:hover { background: var(--secondary); color: white; }
 .label { font-size: 0.85rem; color: var(--muted); }
 .stats strong,
 .final-stats strong { font-size: 1.4rem; }
+
+.question-area {
+  position: relative;
+  min-height: 110px;
+  display: grid;
+  place-items: center;
+}
 
 .question {
   font-size: clamp(2.4rem, 6vw, 3.4rem);
@@ -179,3 +190,57 @@ button.secondary:hover { background: var(--secondary); color: white; }
 }
 
 .question.shake { animation: shake 0.35s ease; }
+
+/* --- Animal celebration layer --- */
+
+.animal-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.animal-pop {
+  position: absolute;
+  font-size: clamp(3rem, 10vw, 6rem);
+  line-height: 1;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.25));
+  animation: animal-bounce 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  user-select: none;
+}
+
+@keyframes animal-bounce {
+  0% {
+    transform: translate(-50%, 40px) scale(0.3) rotate(-15deg);
+    opacity: 0;
+  }
+  25% {
+    transform: translate(-50%, -20px) scale(1.2) rotate(8deg);
+    opacity: 1;
+  }
+  55% {
+    transform: translate(-50%, 0) scale(1) rotate(-4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -80px) scale(0.9) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* Extra sparkles around the popping animal */
+.animal-pop::after {
+  content: '\2728';
+  position: absolute;
+  top: -0.4em;
+  right: -0.6em;
+  font-size: 0.5em;
+  animation: sparkle 1.4s ease-out forwards;
+}
+
+@keyframes sparkle {
+  0% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+  40% { opacity: 1; transform: scale(1.2) rotate(25deg); }
+  100% { opacity: 0; transform: scale(0.6) rotate(90deg); }
+}

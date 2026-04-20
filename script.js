@@ -1,4 +1,4 @@
-// Math Mission - a simple +, -, x, / practice game for kids.
+// Animal Math Safari - practise +, -, x, / with a celebrating animal friend.
 
 const setupEl = document.getElementById('setup');
 const quizEl = document.getElementById('quiz');
@@ -14,6 +14,7 @@ const questionEl = document.getElementById('question');
 const answerInput = document.getElementById('answer');
 const answerForm = document.getElementById('answerForm');
 const feedbackEl = document.getElementById('feedback');
+const animalLayer = document.getElementById('animalLayer');
 
 const finalScoreEl = document.getElementById('finalScore');
 const finalCorrectEl = document.getElementById('finalCorrect');
@@ -27,6 +28,49 @@ const LEVEL_RANGES = {
   medium: { min: 0, max: 20 },
   hard: { min: 1, max: 50 },
 };
+
+// Our cast of celebrating animal friends.
+const ANIMALS = [
+  '\u{1F436}', // dog
+  '\u{1F431}', // cat
+  '\u{1F430}', // rabbit
+  '\u{1F98A}', // fox
+  '\u{1F43B}', // bear
+  '\u{1F43C}', // panda
+  '\u{1F981}', // lion
+  '\u{1F42F}', // tiger
+  '\u{1F428}', // koala
+  '\u{1F435}', // monkey
+  '\u{1F427}', // penguin
+  '\u{1F438}', // frog
+  '\u{1F437}', // pig
+  '\u{1F42E}', // cow
+  '\u{1F992}', // giraffe
+  '\u{1F418}', // elephant
+  '\u{1F993}', // zebra
+  '\u{1F998}', // kangaroo
+  '\u{1F422}', // turtle
+  '\u{1F989}', // owl
+  '\u{1F986}', // duck
+  '\u{1F414}', // chicken
+  '\u{1F434}', // horse
+  '\u{1F984}', // unicorn
+  '\u{1F98B}', // butterfly
+];
+
+// Friendly messages to pair with the celebrating animal.
+const CHEERS = [
+  'Great job!',
+  'Pawsome!',
+  'You did it!',
+  'Wild work!',
+  'Nice one!',
+  'Super smart!',
+  'Fantastic!',
+  'Roarsome!',
+  'Brilliant!',
+  'Way to go!',
+];
 
 const state = {
   ops: ['+', '\u2212', '\u00d7', '\u00f7'],
@@ -109,7 +153,27 @@ function showPanel(panel) {
 function updateHUD() {
   progressEl.textContent = `${state.round} / ${state.totalRounds}`;
   scoreEl.textContent = String(state.score);
-  streakEl.textContent = `${state.streak} \u{1F525}`;
+  streakEl.textContent = `${state.streak} \u{1F43E}`;
+}
+
+// Spawn a celebratory animal that bounces up from a random spot.
+function celebrateAnimal() {
+  const animal = pick(ANIMALS);
+  const el = document.createElement('div');
+  el.className = 'animal-pop';
+  el.textContent = animal;
+
+  // Pick a random horizontal position (20% - 80%) and anchor near bottom.
+  const left = randInt(15, 85);
+  const bottom = randInt(20, 55);
+  el.style.left = `${left}%`;
+  el.style.bottom = `${bottom}%`;
+
+  animalLayer.appendChild(el);
+  // Auto-clean when animation ends so the DOM stays tidy.
+  el.addEventListener('animationend', () => el.remove(), { once: true });
+  // Belt-and-braces fallback.
+  setTimeout(() => el.remove(), 2000);
 }
 
 function nextQuestion() {
@@ -162,13 +226,21 @@ function handleAnswer(event) {
     if (state.streak > state.bestStreak) state.bestStreak = state.streak;
     const points = 10 + Math.min(state.streak - 1, 5) * 2;
     state.score += points;
-    feedbackEl.textContent = `\u2705 Correct! +${points} points`;
+
+    const cheer = pick(CHEERS);
+    feedbackEl.textContent = `${cheer} +${points} points`;
     feedbackEl.className = 'feedback correct';
     questionEl.classList.add('pulse');
-    setTimeout(nextQuestion, 650);
+
+    // Pop a celebrating animal on correct answers.
+    celebrateAnimal();
+    // Extra animal on streaks of 3+.
+    if (state.streak >= 3) celebrateAnimal();
+
+    setTimeout(nextQuestion, 900);
   } else {
     state.streak = 0;
-    feedbackEl.textContent = `\u274C Not quite - the answer was ${state.currentAnswer}.`;
+    feedbackEl.textContent = `\u{1F43E} Not quite - the answer was ${state.currentAnswer}.`;
     feedbackEl.className = 'feedback wrong';
     questionEl.classList.add('shake');
     setTimeout(nextQuestion, 1400);
@@ -179,15 +251,20 @@ function handleAnswer(event) {
 function finishGame() {
   finalScoreEl.textContent = String(state.score);
   finalCorrectEl.textContent = `${state.correct} / ${state.totalRounds}`;
-  finalStreakEl.textContent = `${state.bestStreak} \u{1F525}`;
+  finalStreakEl.textContent = `${state.bestStreak} \u{1F43E}`;
 
   const pct = state.correct / state.totalRounds;
   let message;
-  if (pct === 1) message = 'Perfect score! You are a math superstar! \u{1F31F}';
-  else if (pct >= 0.8) message = 'Awesome work! \u{1F389}';
-  else if (pct >= 0.5) message = 'Nice job - keep practicing! \u{1F4AA}';
-  else message = 'Good try! Every round makes you stronger. \u{1F4A1}';
+  if (pct === 1) message = 'Perfect score! The whole jungle is cheering! \u{1F981}\u{1F42F}\u{1F418}';
+  else if (pct >= 0.8) message = 'Awesome work, safari star! \u{1F98A}';
+  else if (pct >= 0.5) message = 'Nice job - keep practising! \u{1F436}';
+  else message = 'Good try! Every round makes you stronger. \u{1F422}';
   resultsMessageEl.textContent = message;
+
+  // Final burst of animals on the results screen.
+  for (let i = 0; i < 5; i += 1) {
+    setTimeout(celebrateAnimal, i * 150);
+  }
 
   showPanel(resultsEl);
 }

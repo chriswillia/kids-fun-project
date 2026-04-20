@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Math Mission</title>
+  <title>Animal Math Safari</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="container">
-    <h1>Math Mission <span aria-hidden="true">🚀</span></h1>
-    <p class="tagline">Practice addition, subtraction, multiplication, and division!</p>
+    <h1>Animal Math Safari <span aria-hidden="true">🐾</span></h1>
+    <p class="tagline">Practise +, −, ×, ÷ with your animal friends!</p>
 
     <section id="setup" class="panel">
-      <h2>Pick your challenge</h2>
+      <h2>Pick your adventure</h2>
 
       <fieldset>
-        <legend>Which kinds of problems?</legend>
-        <label><input type="checkbox" name="op" value="+" checked> Addition (+)</label>
-        <label><input type="checkbox" name="op" value="−" checked> Subtraction (−)</label>
-        <label><input type="checkbox" name="op" value="×" checked> Multiplication (×)</label>
-        <label><input type="checkbox" name="op" value="÷" checked> Division (÷)</label>
+        <legend>Which kinds of problems? 🐾</legend>
+        <label><input type="checkbox" name="op" value="+" checked> 🐶 Addition (+)</label>
+        <label><input type="checkbox" name="op" value="−" checked> 🐱 Subtraction (−)</label>
+        <label><input type="checkbox" name="op" value="×" checked> 🐰 Multiplication (×)</label>
+        <label><input type="checkbox" name="op" value="÷" checked> 🦊 Division (÷)</label>
       </fieldset>
 
       <fieldset>
-        <legend>How tricky?</legend>
-        <label><input type="radio" name="level" value="easy" checked> Easy (0–10)</label>
-        <label><input type="radio" name="level" value="medium"> Medium (0–20)</label>
-        <label><input type="radio" name="level" value="hard"> Hard (0–50)</label>
+        <legend>How wild? 🦁</legend>
+        <label><input type="radio" name="level" value="easy" checked> 🐰 Easy (0–10)</label>
+        <label><input type="radio" name="level" value="medium"> 🦊 Medium (0–20)</label>
+        <label><input type="radio" name="level" value="hard"> 🦁 Hard (0–50)</label>
       </fieldset>
 
       <label class="rounds">
@@ -39,17 +39,19 @@
         </select>
       </label>
 
-      <button id="startButton" class="primary">Start Mission</button>
+      <button id="startButton" class="primary">Start Safari 🐾</button>
     </section>
 
     <section id="quiz" class="panel hidden" aria-live="polite">
       <div class="stats">
         <div><span class="label">Question</span><strong id="progress">1 / 10</strong></div>
         <div><span class="label">Score</span><strong id="score">0</strong></div>
-        <div><span class="label">Streak</span><strong id="streak">0 🔥</strong></div>
+        <div><span class="label">Streak</span><strong id="streak">0 🐾</strong></div>
       </div>
 
-      <div class="question" id="question">2 + 2 = ?</div>
+      <div class="question-area">
+        <div class="question" id="question">2 + 2 = ?</div>
+      </div>
 
       <form id="answerForm" autocomplete="off">
         <input
@@ -68,11 +70,11 @@
     </section>
 
     <section id="results" class="panel hidden">
-      <h2 id="resultsTitle">Mission complete! 🎉</h2>
+      <h2 id="resultsTitle">Safari complete! 🎉</h2>
       <div class="final-stats">
         <div><span class="label">Score</span><strong id="finalScore">0</strong></div>
         <div><span class="label">Correct</span><strong id="finalCorrect">0 / 0</strong></div>
-        <div><span class="label">Best streak</span><strong id="finalStreak">0 🔥</strong></div>
+        <div><span class="label">Best streak</span><strong id="finalStreak">0 🐾</strong></div>
       </div>
       <p id="resultsMessage" class="tagline"></p>
       <div class="button-row">
@@ -81,6 +83,10 @@
       </div>
     </section>
   </main>
+
+  <!-- Animal celebration layer -->
+  <div id="animalLayer" class="animal-layer" aria-hidden="true"></div>
+
   <script src="script.js"></script>
 </body>
 </html>

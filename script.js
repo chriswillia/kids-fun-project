@@ -172,8 +172,8 @@ function celebrateAnimal() {
   animalLayer.appendChild(el);
   // Auto-clean when animation ends so the DOM stays tidy.
   el.addEventListener('animationend', () => el.remove(), { once: true });
-  // Belt-and-braces fallback.
-  setTimeout(() => el.remove(), 2000);
+  // Belt-and-braces fallback (a little longer than the animation).
+  setTimeout(() => el.remove(), 3500);
 }
 
 function nextQuestion() {
@@ -237,7 +237,7 @@ function handleAnswer(event) {
     // Extra animal on streaks of 3+.
     if (state.streak >= 3) celebrateAnimal();
 
-    setTimeout(nextQuestion, 900);
+    setTimeout(nextQuestion, 2200);
   } else {
     state.streak = 0;
     feedbackEl.textContent = `\u{1F43E} Not quite - the answer was ${state.currentAnswer}.`;

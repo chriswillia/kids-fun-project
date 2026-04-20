@@ -3,21 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Balloon Pop Party</title>
+  <title>Math Mission</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Balloon Pop Party!</h1>
-    <p>Click the balloons to pop them and earn a super score!</p>
-    <div class="score-board">
-      <span>Score:</span>
-      <strong id="score">0</strong>
-    </div>
-    <div class="balloon-area" id="balloonArea"></div>
-    <button id="startButton">Start the Game</button>
-    <p class="instructions">Pop all the balloons before time runs out!</p>
-  </div>
+  <main class="container">
+    <h1>Math Mission <span aria-hidden="true">🚀</span></h1>
+    <p class="tagline">Practice addition, subtraction, multiplication, and division!</p>
+
+    <section id="setup" class="panel">
+      <h2>Pick your challenge</h2>
+
+      <fieldset>
+        <legend>Which kinds of problems?</legend>
+        <label><input type="checkbox" name="op" value="+" checked> Addition (+)</label>
+        <label><input type="checkbox" name="op" value="−" checked> Subtraction (−)</label>
+        <label><input type="checkbox" name="op" value="×" checked> Multiplication (×)</label>
+        <label><input type="checkbox" name="op" value="÷" checked> Division (÷)</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>How tricky?</legend>
+        <label><input type="radio" name="level" value="easy" checked> Easy (0–10)</label>
+        <label><input type="radio" name="level" value="medium"> Medium (0–20)</label>
+        <label><input type="radio" name="level" value="hard"> Hard (0–50)</label>
+      </fieldset>
+
+      <label class="rounds">
+        How many questions?
+        <select id="rounds">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </label>
+
+      <button id="startButton" class="primary">Start Mission</button>
+    </section>
+
+    <section id="quiz" class="panel hidden" aria-live="polite">
+      <div class="stats">
+        <div><span class="label">Question</span><strong id="progress">1 / 10</strong></div>
+        <div><span class="label">Score</span><strong id="score">0</strong></div>
+        <div><span class="label">Streak</span><strong id="streak">0 🔥</strong></div>
+      </div>
+
+      <div class="question" id="question">2 + 2 = ?</div>
+
+      <form id="answerForm" autocomplete="off">
+        <input
+          id="answer"
+          type="number"
+          inputmode="numeric"
+          step="1"
+          placeholder="Your answer"
+          aria-label="Your answer"
+          required
+        />
+        <button type="submit" class="primary">Check</button>
+      </form>
+
+      <div id="feedback" class="feedback" role="status"></div>
+    </section>
+
+    <section id="results" class="panel hidden">
+      <h2 id="resultsTitle">Mission complete! 🎉</h2>
+      <div class="final-stats">
+        <div><span class="label">Score</span><strong id="finalScore">0</strong></div>
+        <div><span class="label">Correct</span><strong id="finalCorrect">0 / 0</strong></div>
+        <div><span class="label">Best streak</span><strong id="finalStreak">0 🔥</strong></div>
+      </div>
+      <p id="resultsMessage" class="tagline"></p>
+      <div class="button-row">
+        <button id="playAgain" class="primary">Play Again</button>
+        <button id="changeSettings" class="secondary">Change Settings</button>
+      </div>
+    </section>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
